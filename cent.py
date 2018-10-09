@@ -55,7 +55,16 @@ for c in contours:
 		cY = int(M["m01"] / M["m00"])
 	else:
 		cX, cY = 0, 0
+	cnts=max(c,key=cv2.contourArea)
+	extLeft = tuple(c[c[:, :, 0].argmin()][0])
+	extRight = tuple(c[c[:, :, 0].argmax()][0])
+	extTop = tuple(c[c[:, :, 1].argmin()][0])
+	extBot = tuple(c[c[:, :, 1].argmax()][0])
 	cv2.circle(im_with_keypoints, (cX, cY), 2, (0, 0, 255), -1)
+	cv2.circle(im_with_keypoints, extLeft, 2, (0, 0, 255), -1)
+	cv2.circle(im_with_keypoints, extRight, 2, (0, 255, 0), -1)
+	cv2.circle(im_with_keypoints, extTop, 2, (255, 0, 0), -1)
+	cv2.circle(im_with_keypoints, extBot, 2, (255, 255, 0), -1)
 	cv2.putText(im_with_keypoints, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
  
 plt.imshow(thresh,cmap='gray')
